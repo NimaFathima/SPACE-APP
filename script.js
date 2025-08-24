@@ -7,6 +7,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const moonIconMainEl = document.getElementById('moon-icon-main');
     const phaseLabelEl = document.getElementById('phase-label');
     const forecastGridEl = document.getElementById('forecast-grid');
+
+    // Modal elements
+    const modalEl = document.createElement('div');
+    modalEl.id = 'modal';
+    modalEl.className = 'fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden';
+    modalEl.innerHTML = `
+        <div class="bg-gray-800 rounded-2xl p-6 md:p-8 max-w-sm w-full text-center relative">
+            <button id="close-modal-btn" class="absolute top-3 right-3 text-gray-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <h3 id="modal-date" class="text-xl font-bold mb-2"></h3>
+            <p id="modal-phase" class="text-lg text-gray-300 mb-4"></p>
+            <p id="modal-illumination" class="text-sm text-gray-400 mb-4"></p>
+            <p id="modal-fact" class="text-sm text-gray-200"></p>
+        </div>
+    `;
+    document.body.appendChild(modalEl);
+
+    // Get the new modal elements after appending
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const modalDateEl = document.getElementById('modal-date');
+    const modalPhaseEl = document.getElementById('modal-phase');
+    const modalIlluminationEl = document.getElementById('modal-illumination');
+    const modalFactEl = document.getElementById('modal-fact');
     
     // Set the date picker to today's date
     const today = new Date();
@@ -85,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         return date.toLocaleDateString('en-US', options);
     }
-
+    
     /**
      * Renders a single moon phase card on the UI.
      * @param {Date} date The date for the moon phase.
@@ -95,14 +121,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const div = document.createElement('div');
         div.className = `flex flex-col items-center justify-center p-4 rounded-xl bg-gray-700 text-center forecast-card cursor-pointer`;
         
-        // Add a click event listener to each card
+        // Update the click event listener to show the new modal
         div.addEventListener('click', () => {
-            alert(`
-                Phase: ${phaseData.phase}
-                Date: ${formatDate(date)}
-                Illumination: ${phaseData.illumination}%
-                Did You Know?: ${phaseData.fact}
-            `);
+            modalDateEl.textContent = formatDate(date);
+            modalPhaseEl.textContent = `Phase: ${phaseData.phase}`;
+            modalIlluminationEl.textContent = `Illumination: ${phaseData.illumination}%`;
+            modalFactEl.textContent = `Did You Know?: ${phaseData.fact}`;
+            modalEl.classList.remove('hidden');
         });
 
         const iconSpan = document.createElement('span');
@@ -159,4 +184,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event listeners
     showPhaseBtn.addEventListener('click', updateDisplay);
     datePickerEl.addEventListener('change', updateDisplay);
+
+    // Close modal event listener
+    closeModalBtn.addEventListener('click', () => {
+        modalEl.classList.add('hidden');
+    });
+
+    modalEl.addEventListener('click', (e) => {
+        if (e.target === modalEl) {
+            modalEl.classList.add('hidden');
+        }
+    });
 });
