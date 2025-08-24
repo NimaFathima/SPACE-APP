@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moon Phase Tracker</title>
+    <!-- Link to the external CSS file for styling -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Use the Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Load Tailwind CSS from CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+
+    <!-- Main container for the app, centered on the page -->
+    <div class="app-card relative rounded-3xl p-8 md:p-12 max-w-4xl w-full text-center m-4 z-10">
+        
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 text-white">Moon Phase Tracker</h1>
+        <p class="text-gray-400 mb-8 font-medium">
+            Select a date to see the moon's phase.
+        </p>
+
+        <!-- Date picker and current phase section -->
+        <div class="flex flex-col md:flex-row items-center justify-center gap-6 mb-8">
+            <input type="date" id="date-picker" class="bg-gray-700 text-white rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 cursor-pointer">
+            <button id="show-phase-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-xl transition-colors duration-300">
+                Show Phase
+            </button>
+        </div>
+
+        <!-- Moon phase display section -->
+        <div id="moon-display-section" class="flex flex-col items-center justify-center hidden">
+            <h2 class="text-3xl font-semibold mb-4 text-white" id="phase-heading"></h2>
+            <div class="relative w-32 h-32 mb-4 flex items-center justify-center">
+                <span id="moon-icon-main" class="moon-icon"></span>
+            </div>
+            <p id="phase-label" class="text-xl font-bold text-gray-200 mb-4"></p>
+        </div>
+
+        <!-- Next 7 Days Forecast Section -->
+        <div id="forecast-container" class="mt-12">
+            <h2 class="text-2xl font-semibold mb-6">Next 7 Days Forecast</h2>
+            <div id="forecast-grid" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4">
+                <!-- Forecast items will be injected here by JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Link to the external JavaScript file -->
+    <script src="script.js"></script>
+
+</body>
+</html>
